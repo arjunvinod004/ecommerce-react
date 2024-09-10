@@ -7,6 +7,7 @@ import Test from './Test'
 import { BrowserRouter as Router,Route,Routes } from 'react-router-dom';
 import Bag from './Bag';
 import Product from './components/Product';
+import Cart from './Cart';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path='/' element={<Home/>} />
         <Route path='/products' element={<Products/>} />
         <Route path='/product/:id' element={<Product/>}/>
+        <Route path='/cart' element={<Cart/>}/>
        
      
       </Routes>

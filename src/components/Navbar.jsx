@@ -40,7 +40,10 @@ function Navbar() {
       <button type="button" class="btn btn-outline-secondary" > <i className="fa-solid fa-right-to-bracket me-1" /> Login</button>
 
       <button type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-user me-2"></i> Register</button>
-      <button type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-cart-shopping me-2"></i> Cart</button>
+    <Link to={'/cart'} style={{display:'contents'}}> 
+     <button type="button" class="btn btn-outline-secondary" style={{position:'relative'}}>
+     <span class="cart-item-count">0</span>
+      <i class="fa-solid fa-cart-shopping me-2"></i> Cart</button></Link>
  
 </div>
 
