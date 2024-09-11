@@ -62,17 +62,20 @@ app.get('/getmainfunctions/:id',(req,res)=>{
 
 app.post('/getcart', async (req, res) => {
     try {
-        const { title, price, category, image, description, id, quantity } = req.body;
+        const { title, price, totalPrice, category, image, description, id,size} = req.body;
 
         // Create a new cart item
         const newCartItem = new cart({
             id,
             title,
             price,
+            totalPrice,
             category,
             image,
             description,
-     id
+            id,
+            size
+     
             
         });
 

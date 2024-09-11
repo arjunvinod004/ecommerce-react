@@ -4,7 +4,7 @@ function Navbar() {
   return (
     <nav class="navbar navbar-expand-lg bg-body-tertiary py-4">
     <div class="container">
-      <a class="navbar-brand" href="#"> Deals of Day</a>
+     <Link to={'/'} style={{textDecoration:'none'}}><a class="navbar-brand"> Deals of Day</a></Link> 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

@@ -4,7 +4,7 @@ import { useEffect ,useState } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from './Navbar'
 import axios from 'axios'
-import Slider from 'react-slick'
+
 
 
 
@@ -14,7 +14,7 @@ function Product() {
     const [loading, setLoading] = useState(true); // To track loading state
     const [quanity,setquanity ]=useState(1)
   const [title,setTitle]=useState('');
-  const [price,setPrice]=useState('');
+  const [price,setPrice]=useState(0);
   const [category,setCategory]=useState('')
   const [code,setCode]=useState('')
   const [size,setSize]=useState('')
@@ -22,37 +22,40 @@ function Product() {
   const[image1,setimage1]=useState('')
   const [specification,setspecification]=useState('')
   const [description,setDescription]=useState('');
-  const [message,setMessage]=useState('')
+  const [message,setMessage]=useState('');
+  const [showPrice, setShowPrice] = useState(false);
+
 const navigate=useNavigate()
-var settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  autoplaySpeed: 2000,
-  autoplay: true,
-  adaptiveHeight: true,
-    cssEase: "linear"
-};
-const unitprice= price
-console.log(unitprice);
+
+const totalPrice = price * quanity;
+console.log(price);
+console.log(totalPrice);
+
+
+// const unitprice= 100
+// console.log(unitprice);
 
 const decrement=()=>{
-  if(quanity>0){
+  if(quanity>1){
     setquanity(prevQuantity => prevQuantity - 1)
-    setPrice(prevPrice =>Number(prevPrice) - unitprice);
+ 
   }
 }
 console.log(id);
 console.log(price);
 
 const increment=()=>{
-  
     setquanity(prevQuantity => prevQuantity + 1)
-    setPrice(prevPrice =>Number (prevPrice) + unitprice);
+    setShowPrice(true)
+  
+  console.log(price);
+ 
+    
   
 }
+
+
+
 
 const handleinputchange=(e)=>{
   const value= e.target.value;
@@ -82,19 +85,24 @@ setspecification(result.data.Specification)
 const handlesubmit=(e)=>{
   e.preventDefault();
   alert('hii')
-  axios.post('http://localhost:8000/getcart',{title,price,category,image,description,id})
+  axios.post('http://localhost:8000/getcart',{title,price,totalPrice,category,image,description,id,size})
   .then(result=>{
     setMessage(result.data.message)
     alert(result.data.message)
     console.log(result.data.message)
     console.log(title);
    
-    
+   
   })
   .catch(err=>{console.log(err)
   })
 }
 
+
+useEffect(() => {
+  // Update totalPrice when quantity or unitPrice changes
+  setShowPrice(price * quanity);
+}, [quanity, price]);
 // const handlesubmit = async (e) => {
 //   e.preventDefault();
 //   try {
@@ -192,12 +200,16 @@ const handlesubmit=(e)=>{
                         <h1 class="lead fw-bolder "> category: {category}</h1>
                         <div class="fs-5 mb-5">
                           <br />
-                            <span style={{fontWeight:'bold'}}>price: ₹{price}</span>
+                          {showPrice && ( <span style={{fontWeight:'bold'}}>price: ₹{totalPrice}</span> )}
+                          {/* <span style={{fontWeight:'bold'}}>price: ₹{price}</span> */}
+                            {/* <span style={{fontWeight:'bold'}}>price: ₹{price}</span> */}
                         </div>
                         <p class="lead fw-bolder"> Size: {size}</p>
                         <p class="lead fw-bolder"> description: {description}</p>
                         <p class="lead fw-bolder"> specification: {specification}</p>
                         <p class="lead fw-bolder"> code: {code}</p>
+                        {/* <p class="lead fw-bolder"> code: {totalPrice}</p> */}
+
                         <div class="d-flex mt-4">
                         <input className='form-control text-center me-3 ' type="button" value='-' style={{ maxWidth: '3rem' }} onClick={decrement} />
                     <input
@@ -207,7 +219,7 @@ const handlesubmit=(e)=>{
                       value={quanity} // Corrected spelling here
                       readOnly
                       style={{ maxWidth: '3rem' }} />
-                    <input className='form-control text-center me-3 ' type="button" value='+' style={{ maxWidth: '3rem' }} onClick={increment} />
+                    <input className='form-control text-center me-3 ' type="button" value='+'  style={{ maxWidth: '3rem' }} onClick={increment} />
 
                           {/* <Link to={`/cart/${id}`}> */}
                           <button type='submit' onClick={handlesubmit}  class="btn btn-outline-dark flex-shrink-0" >
