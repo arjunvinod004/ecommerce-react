@@ -36,6 +36,8 @@ var settings = {
     cssEase: "linear"
 };
 const unitprice= price
+console.log(unitprice);
+
 const decrement=()=>{
   if(quanity>0){
     setquanity(prevQuantity => prevQuantity - 1)
@@ -43,6 +45,7 @@ const decrement=()=>{
   }
 }
 console.log(id);
+console.log(price);
 
 const increment=()=>{
   

@@ -8,6 +8,7 @@ import { BrowserRouter as Router,Route,Routes } from 'react-router-dom';
 import Bag from './Bag';
 import Product from './components/Product';
 import Cart from './Cart';
+import Increments from './Increments';
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
         <Route path='/products' element={<Products/>} />
         <Route path='/product/:id' element={<Product/>}/>
         <Route path='/cart' element={<Cart/>}/>
-       
+        <Route path='/increment' element={<Increments/>}/>
      
       </Routes>
     </Router>
