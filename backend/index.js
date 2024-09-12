@@ -100,6 +100,17 @@ app.get('/getcarts',(req,res)=>{
     .catch(err=>res.json(err))
 })
 
+app.delete('/getcartsdelete/:id',(req,res)=>{
+    const id= req.params.id
+    cart.findByIdAndDelete({_id:id})
+    .then(users=>{res.json(users)
+       console.log(users);
+        
+})
+    .catch(err=>res.json(err))
+})
+
+
 app.listen(port,function(){
     console.log(`connected to ${port}`);
     
