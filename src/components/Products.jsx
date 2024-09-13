@@ -83,7 +83,9 @@ function Products() {
                                      
                                     </div>
                                     <div className='mt-2'>
-                                    <Link to={`/product/${item._id}`}> <a href="#" className="btn btn-primary">Buy Now</a></Link>
+                                    <Link to={`/product/${item._id}`}> <a href="#" className="btn btn-primary mx-2">Buy Now</a></Link>
+
+                                    <a href="#" className="btn btn-warning">Add to Cart</a>
                                     </div>
                                    
                                 </div>

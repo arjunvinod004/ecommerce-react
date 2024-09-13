@@ -15,8 +15,9 @@ const [category,setCategory]=useState('')
 const[image,setimage]=useState('')
 const [description,setDescription]=useState('');
 
-  
+  const [totalprice,setTotalprice]=useState(0)
 
+console.log(totalprice);
 
 
 
@@ -43,6 +44,12 @@ console.log(id);
       }
       
 
+      useEffect(() => {
+        const total = data.reduce((acc, item) => acc + (item.totalPrice || 0) * (item.quantity || 1), 0);
+       setTotalprice(total);
+        console.log(total);
+        
+      }, [data,totalprice]);
 
   
   return (
@@ -80,24 +87,41 @@ console.log(id);
                   </div><div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                  
                     <h5 className="mb-0">{item.totalPrice}</h5>
-                  </div><div className="col-md-1 col-lg-1 col-xl-1 text-end">
+                  </div>
+                  <div className="col-md-1 col-lg-1 col-xl-1 text-end">
+
                     <a href="#!" className="text-danger"><i className="fas fa-trash fa-lg" onClick={(e)=>handledelete(item._id)} /></a>
-                  </div></>
+                  </div>
+                  
+                  </>
+
+                  
               ))
               
               }
-
+  
             </div>
               ):(
                 <div class="text-center">
-                <img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-illustration-download-in-svg-png-gif-file-formats--shopping-ecommerce-simple-error-state-pack-user-interface-illustrations-6024626.png" class="rounded" alt="..."/>
+               <p>cart is empty</p>
               </div>
+
               )}
           </div>
         </div>
-      
+        <div class="card mb-5">
+            <div class="card-body p-4">
+
+              <div class="float-end">
+                <p class="mb-0 me-5 d-flex align-items-center">
+                  <span class="small text-muted me-2 fw-bold">Order total:</span> <span class="lead fw-bold">{totalprice}</span>
+                </p>
+              </div>
+
+            </div>
+          </div>
         <div className="card">
-          <div className="card-body">
+          <div className="card-body text-center">
             <button type="button" data-mdb-button-init data-mdb-ripple-init className="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
           </div>
         </div>
@@ -105,6 +129,17 @@ console.log(id);
     </div>
   </div>
 </section>
+
+
+
+
+
+
+
+
+
+
+
 
 </>
 
