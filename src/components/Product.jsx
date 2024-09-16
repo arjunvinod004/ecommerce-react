@@ -227,6 +227,8 @@ useEffect(() => {
                                 Add to cart
                             </button>
 
+                            <a href="#" className="btn btn-warning mx-2">Checkout</a>
+
                           
                             {/* </Link>   */}
                            
