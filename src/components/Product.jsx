@@ -4,8 +4,9 @@ import { useEffect ,useState } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from './Navbar'
 import axios from 'axios'
-
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 
 function Product() {
@@ -25,11 +26,49 @@ function Product() {
   const [message,setMessage]=useState('');
   const [showPrice, setShowPrice] = useState(false);
 
+  const [related,setRelated]=useState([])
+
 const navigate=useNavigate()
 
 const totalPrice = price * quanity;
 console.log(price);
 console.log(totalPrice);
+console.log(related);
+
+var settings = {
+  dots: true,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  initialSlide: 0,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+  ]
+};
 
 
 // const unitprice= 100
@@ -103,6 +142,19 @@ useEffect(() => {
   // Update totalPrice when quantity or unitPrice changes
   setShowPrice(price * quanity);
 }, [quanity, price]);
+
+useEffect(() => {
+  // Fetch data from the API
+  axios.get('http://localhost:8000/getrelatedproducts')
+    .then(data => {
+      console.log('Fetched data:', data); // Debug log
+    setRelated(data.data);
+      // setFilteredData(data.data);
+    })
+    .catch(error => console.error('Error fetching data:', error));
+}, []);
+
+
 // const handlesubmit = async (e) => {
 //   e.preventDefault();
 //   try {
@@ -227,7 +279,7 @@ useEffect(() => {
                                 Add to cart
                             </button>
 
-                            <a href="#" className="btn btn-warning mx-2">Checkout</a>
+                        <Link to={'/login'}> <a href="#" className="btn btn-warning mx-2">Checkout</a></Link>   
 
                           
                             {/* </Link>   */}
@@ -237,6 +289,9 @@ useEffect(() => {
                 </div>
             </div>
         </section>
+
+
+        
 
                 {/* <div classname="buttons text-center p-3"   >
   
@@ -271,7 +326,110 @@ useEffect(() => {
             </div>
         </div>
         </form>
+
+
+        
       </div>
+
+     
+
+      <div className="slider-container">
+      <h5 className='text-center'>Related products</h5>
+      <Slider {...settings}>
+ 
+        {related.map((item,index)=>(
+  <div class="col-md-3 mb-4 ">
+    
+    <div class="card h-100 text-center p-3 mx-2">
+       
+      <img src={item.image} class="card-img-top" alt="..." height="350px"/>
+      <div className="card-body">
+                                    <h5 className="card-title">{item.title.substring(0,9)}</h5>
+                                    <p className="card-text">{item.category}</p>
+                                    <p className="card-text"> ₹{item.price}</p>
+                                    <div className='rounded'>
+                                      <span className='circle'>Free Delivery</span>
+                                    </div>
+
+                                    <div className='mt-2'>
+                                      <span className='rating' style={{color:'#fff'}}>{item.rating}
+
+                                      <img style={{marginLeft:'4px'}} width={'10px'} height={'10px'}  src="https://www.meesho.com/assets/svgicons/star.svg" alt="" />
+                                      </span>
+                                     
+                                    </div>
+                                    <div className='mt-2'>
+                                    <Link to={`/product/${item._id}`}> <a href="#" className="btn btn-primary mx-2">Buy Now</a></Link>
+
+                                  
+                                    </div>
+                                   
+                                </div>
+      </div>
+      </div>
+        ))}
+     
+       
+      </Slider>
+    </div>
+
+      {/* <div className="container">
+      <div className="row">
+        <div className="col-6">
+          <h3 className="mb-3">Carousel cards title</h3>
+        </div>
+        <div className="col-6 text-right">
+          <a
+            className="btn btn-primary mb-3 mr-1"
+            href="#carouselExampleIndicators2"
+            role="button"
+            data-slide="prev"
+          >
+            <i className="fa fa-arrow-left" />
+          </a>
+          <a
+            className="btn btn-primary mb-3"
+            href="#carouselExampleIndicators2"
+            role="button"
+            data-slide="next"
+          >
+            <i className="fa fa-arrow-right" />
+          </a>
+        </div>
+        <div className="col-12">
+          <div id="carouselExampleIndicators2" className="carousel slide" data-ride="carousel">
+            <div className="carousel-inner ">
+                  <div  className={`carousel-item active`}>
+                    <div className="row">
+                    {related.map((item, index) => (
+                        <div className="col-md-4 " key={index}>
+                          <div className="card">
+                            <img
+                              className="img-fluid"
+                              alt="Product"
+                              src={item.image} // Use the correct property from your data
+                            />
+                            <div className="card-body">
+                              <h4 className="card-title">{item.title}</h4>
+                              <p className="card-text">{item.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> */}
+
+
+   
+
+      
     </div>
   )
 }

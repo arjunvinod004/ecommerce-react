@@ -7,6 +7,7 @@ app.use(express.urlencoded({ extended: false }));
 const port = process.env.PORT || 8000
 const collection = require('./mongoose')
 const cart= require('./cart')
+const relats = require('./related');
 
 // app.use(cors({
 //     origin:'http://localhost:8000',
@@ -44,6 +45,8 @@ app.get('/getmainfunctions/:id',(req,res)=>{
 })
     .catch(err=>res.json(err))
 })
+
+
 
 // app.post('/getcart',(req,res)=>{
 //     cart.create(req.body)
@@ -97,8 +100,23 @@ app.get('/getcarts',(req,res)=>{
     .then(users=>{res.json(users)
         
 })
+
+
     .catch(err=>res.json(err))
 })
+
+app.get('/getrelatedproducts',(req,res)=>{
+  relats.find()
+    .then(users=>{
+       res.json(users)
+        console.log(users);   
+    })
+    .catch(err=>
+        res.json(err)
+    )
+})
+
+
 
 app.delete('/getcartsdelete/:id',(req,res)=>{
     const id= req.params.id

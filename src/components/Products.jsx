@@ -4,6 +4,7 @@ import { useId } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { Link } from 'react-router-dom'
+import Navbar from './Navbar'
 function Products() {
     const [data,setData]=useState([])
     const id= useId()
@@ -40,6 +41,7 @@ function Products() {
 
   return (
     <div>
+    
       <div className="container">
         <div className="row">
             <div className="col-12">

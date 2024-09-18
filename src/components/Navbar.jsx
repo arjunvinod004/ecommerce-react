@@ -37,9 +37,9 @@ function Navbar() {
         </ul>
       <div classname="buttons" style={{display:'flex',gap:'10px'}}  >
   
-      <button type="button" class="btn btn-outline-secondary" > <i className="fa-solid fa-right-to-bracket me-1" /> Login</button>
+     <Link to={'/login'} style={{display:'contents'}}><button type="button" class="btn btn-outline-secondary" > <i className="fa-solid fa-right-to-bracket me-1" /> Login</button></Link> 
 
-      <button type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-user me-2"></i> Register</button>
+   <Link to={'/register'}> <button type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-user me-2"></i> Register</button></Link>  
     <Link to={'/cart'} style={{display:'contents'}}> 
      <button type="button" class="btn btn-outline-secondary" style={{position:'relative'}}>
      <span class="cart-item-count">0</span>
