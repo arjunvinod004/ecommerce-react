@@ -8,6 +8,7 @@ const port = process.env.PORT || 8000
 const collection = require('./mongoose')
 const cart= require('./cart')
 const relats = require('./related');
+const order=require('./order')
 
 // app.use(cors({
 //     origin:'http://localhost:8000',
@@ -91,6 +92,33 @@ app.post('/getcart', async (req, res) => {
         res.status(500).json({ message: 'Failed to add item to cart' });
     }
 });
+
+
+
+app.post('/orders', async (req, res) => {
+    try {
+        const {name,address,phonenumber,totalprice} = req.body;
+
+        // Create a new cart item
+        const neworderItem = new order({
+           name,
+           address,
+           phonenumber,
+           totalprice
+     
+            
+        });
+
+        // Save the item to the database
+        await neworderItem.save();
+
+        res.status(200).json({ message: 'order generated successfully', item: neworderItem });
+    } catch (err) {
+        console.error('Error adding item to cart:', err);
+        res.status(500).json({ message: 'Failed to order item' });
+    }
+});
+
 
 
 

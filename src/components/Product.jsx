@@ -279,7 +279,7 @@ useEffect(() => {
                                 Add to cart
                             </button>
 
-                        <Link to={'/login'}> <a href="#" className="btn btn-warning mx-2">Checkout</a></Link>   
+                        <Link to={'/login'}> <a href="#" className="btn btn-warning mx-2 btn-lg">Checkout</a></Link>   
 
                           
                             {/* </Link>   */}
@@ -359,7 +359,8 @@ useEffect(() => {
                                      
                                     </div>
                                     <div className='mt-2'>
-                                    <Link to={`/product/${item._id}`}> <a href="#" className="btn btn-primary mx-2">Buy Now</a></Link>
+                                  
+                                     <a href="#" className="btn btn-primary mx-2">Buy Now</a>
 
                                   
                                     </div>

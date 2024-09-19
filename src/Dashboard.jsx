@@ -1,14 +1,15 @@
 import React from 'react'
 import { useState } from 'react';
 function Dashboard() {
-
+// const username=localStorage.getItem("username")
 
     
   return (
 
  
 <div>
-    welcome to dashboard
+  {/* <div style={{float:'right'}} className='mr-2'>welcome {username}</div> */}
+   <div>welcome to dashboard</div>
 </div>
 
   )

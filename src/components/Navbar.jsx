@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-function Navbar() {
+function Navbar({ cartCount }) {
+  const username=localStorage.getItem("username")
+  console.log(cartCount);
+  
   return (
     <nav class="navbar navbar-expand-lg bg-body-tertiary py-4">
     <div class="container">
@@ -21,19 +24,7 @@ function Navbar() {
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">contact</a>
-          </li>
-          {/* <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"/></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li> */}
-         
+          </li>         
         </ul>
       <div classname="buttons" style={{display:'flex',gap:'10px'}}  >
   
@@ -42,8 +33,23 @@ function Navbar() {
    <Link to={'/register'}> <button type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-user me-2"></i> Register</button></Link>  
     <Link to={'/cart'} style={{display:'contents'}}> 
      <button type="button" class="btn btn-outline-secondary" style={{position:'relative'}}>
-     <span class="cart-item-count">0</span>
+    <span class="cart-item-count">{cartCount}</span>
       <i class="fa-solid fa-cart-shopping me-2"></i> Cart</button></Link>
+      {username && (<div class="dropdown">
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  {username}
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#"> My Profile</a>
+    <a class="dropdown-item" href="#">Order</a>
+    <a class="dropdown-item" href="#">Settings</a>
+  </div>
+</div>)}
+      
+{/* {username && (<span  className='mx-5 mt-2'>
+        hello {username}
+      </span>)}
+       */}
  
 </div>
 

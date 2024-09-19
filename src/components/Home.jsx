@@ -1,11 +1,29 @@
-import React from "react";
-
+import React, { useState } from "react";
+import axios from "axios";
 import Navbar from "./Navbar";
 import Products from "./Products";
+import { useEffect } from "react";
 function Home() {
+  const [cartCount, setCartCount] = useState(0); // State to track the number of items in the cart
+
+
+  useEffect(()=>{
+    axios.get('http://localhost:8000/getcarts')
+    .then(result=>{
+    
+      setCartCount(result.data.length);
+      console.log(result)
+    
+    
+    })
+    },[])
+
+  
+  
   return (
     <div className="hero">
-      <Navbar />
+      <Navbar cartCount={cartCount}  />
+
 
 
       <div class="card bg-dark text-white border-0">

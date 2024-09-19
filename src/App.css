@@ -113,11 +113,11 @@ input {
  
 }
 
-input:focus {
+/* input:focus {
   border-color: #3498db;
-}
+} */
 
-button {
+/* button {
   background-color: #3498db;
   color: #fff;
   padding: 10px;
@@ -125,30 +125,9 @@ button {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-}
+} */
 
-button:hover {
+.buttons:hover {
   background-color: #2980b9;
 }
 
-
-.sidebar {
-  min-height: calc(100vh - 97px);
-  background: #F4F5F7;
-  font-family: "Manrope", sans-serif;
-  font-weight: 500;
-  padding: 0;
-  width: 220px;
-  z-index: 11;
-  transition: width 0.25s ease, background 0.25s ease;
-  -webkit-transition: width 0.25s ease, background 0.25s ease;
-  -moz-transition: width 0.25s ease, background 0.25s ease;
-  -ms-transition: width 0.25s ease, background 0.25s ease;
-}
-
-.sidebar .nav {
-  overflow: hidden;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  margin-bottom: 60px;
-}
