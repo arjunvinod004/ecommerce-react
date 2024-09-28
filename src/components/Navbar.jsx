@@ -1,9 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Dropdown from 'react-bootstrap/Dropdown';
 function Navbar({ cartCount }) {
   const username=localStorage.getItem("username")
   console.log(cartCount);
-  
+  const handlelogout=()=>{
+    localStorage.removeItem('username')
+    window.location.reload();
+  }
   return (
     <nav class="navbar navbar-expand-lg bg-body-tertiary py-4">
     <div class="container">
@@ -35,16 +39,20 @@ function Navbar({ cartCount }) {
      <button type="button" class="btn btn-outline-secondary" style={{position:'relative'}}>
     <span class="cart-item-count">{cartCount}</span>
       <i class="fa-solid fa-cart-shopping me-2"></i> Cart</button></Link>
-      {username && (<div class="dropdown">
-  <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-  {username}
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#"> My Profile</a>
-    <a class="dropdown-item" href="#">Order</a>
-    <a class="dropdown-item" href="#">Settings</a>
-  </div>
-</div>)}
+   
+{username &&(<Dropdown>
+      <Dropdown.Toggle variant=" btn btn-outline-secondary" id="dropdown-basic">
+      {username}
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item href="#/action-1">profile</Dropdown.Item>
+        <Dropdown.Item  onClick={handlelogout}>Logout</Dropdown.Item>
+      
+      </Dropdown.Menu>
+    </Dropdown>
+)}
+
       
 {/* {username && (<span  className='mx-5 mt-2'>
         hello {username}

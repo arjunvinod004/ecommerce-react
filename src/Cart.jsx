@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from './components/Navbar'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import axios from 'axios'
 function Cart() {
@@ -13,31 +13,132 @@ const [address,setAddress]=useState('')
 const [phonenumber,setPhonenumber]=useState('')
 const [orders,setorders]=useState([])
   const [totalprice,setTotalprice]=useState(0)
+  const [size,setSize]=useState('')
+  const[image,setimage]=useState('')
+  const[image1,setimage1]=useState('')
+  const [specification,setspecification]=useState('')
+  const [description,setDescription]=useState('');
+const [array,setArray]=useState([])
+const [sleeve,setSleeve]=useState('')
+
+const [title,setTitle]=useState('');
+const [price,setPrice]=useState(0);
+const [category,setCategory]=useState('')
+const [totalPrice,setTotalPrice]=useState(0)
 
 console.log(totalprice);
 
+const navigate=useNavigate()
 
 console.log(name);
 console.log(address);
 console.log(phonenumber);
 
+// useEffect(() => {
+//   const storedArray = localStorage.setItem('myData');
+//   if (storedArray) {
+//     setData(JSON.parse(storedArray));
+//   }
+// }, []);
+
+const datas=localStorage.getItem('data')
+console.log(datas);
+console.log(title);
+console.log(image);
+
+
+
+
+
+
+// data.forEach((product) => {
+//   const { title, price, totalPrice,sleeve,image } = product;
+//   console.log(`Title: ${title}, Price: ${price}, Total Price: ${totalPrice}, sleeve:${sleeve}, image:${image}`);
+
+// });
 
 
 
 
 console.log(id);
+// const price= data.map((item,index)=>{
+//   item.totalPrice
+// })
+useEffect(() => {
+  // Retrieve the product data from localStorage
+  const storedData = localStorage.getItem('data');
+  console.log(storedData);
 
-  useEffect(()=>{
-    axios.get('http://localhost:8000/getcarts')
-    .then(result=>{
-      setData(result.data)
-      setCartCount(result.data.length);
-      console.log(result)
-    
-    
-    })
-    },[])
+  if (storedData) {
+    // Parse the stored data (expected to be an array of objects)
+    const dataArray = JSON.parse(storedData);
+    setData(dataArray)
 
+    // Initialize arrays to hold the extracted values
+    const tempPrices = [];
+    const tempImages = [];
+    const tempTitles = [];
+
+    // Iterate over the array to extract TotalPrice, image, and title for each product
+    dataArray.forEach((product) => {
+      const { TotalPrice, image, title } = product;
+
+      // Push the values into respective arrays
+      tempPrices.push(TotalPrice || 'N/A');
+      tempImages.push(image || 'No image');
+      tempTitles.push(title || 'No title');
+    });
+
+    // Set the state with the populated arrays
+    setTotalPrice(tempPrices);
+    setimage(tempImages);
+    setTitle(tempTitles);
+  }
+//   if (storedData) {
+//     // Parse the data and set it in state
+//     const parsedData = JSON.parse(storedData);
+//     setData(parsedData);
+//     const { TotalPrice, slleve, image, title } = parsedData;
+// console.log(parsedData);
+
+//     // Set the data to state variables
+    
+//     // const dataObject = JSON.parse(storedData);
+//     // setTotalPrice(dataObject.TotalPrice);
+//     // setSleeve(dataObject.slleve);
+//     // setimage(dataObject.image);
+//     // setTitle(dataObject.title);
+//     // const totalPrice = parsedData.reduce((sum, item) => {
+//     //   // Assuming each item has a 'price' and 'quantity' field to calculate totalPrice
+//     //   return sum + (item.totalPrice || (item.price * item.quantity)); // Fallback if `totalPrice` is not directly available
+//     // }, 0)
+
+//   }
+}, []);
+
+
+
+// useEffect(() => {
+
+//   // const isLoggedIn = localStorage.getItem('username'); // Or any flag/token you're using
+//   // if (!isLoggedIn) {
+//     // If not logged in, redirect to login page
+//     // navigate('/login');
+//   // } else {
+//     // If logged in, fetch the cart data
+//     axios.get('http://localhost:8000/getcarts')
+//       .then(result => {
+//         setData(result.data);
+//         setCartCount(result.data.length);
+//         console.log(result);
+//         // localStorage.setItem()
+//       })
+//       .catch(err => console.log(err));
+//   // }
+// }, []);
+
+const usersname=localStorage.getItem('username')
+console.log(usersname);
 
     const handledelete=(id)=>{
       
@@ -48,13 +149,39 @@ console.log(id);
       .catch(err=>console.log(err))
       }
       
+      useEffect(()=>{
+        const total = data.reduce((sum, item) => sum + item.totalPrice, 0);
+        setTotalprice(total);
+      })
 
-      useEffect(() => {
-        const total = data.reduce((acc, item) => acc + (item.totalPrice || 0) * (item.quantity || 1), 0);
-       setTotalprice(total);
-        console.log(total);
+      // useEffect(() => {
+      //   const total = data.reduce((acc, item) => acc + (item.totalPrice || 0) * (item.quantity || 1), 0);
+      //  setTotalprice(total);
+      //   console.log(total);
         
-      }, [data,totalprice]);
+      // }, [data,totalprice]);
+
+const handlecheck=()=>{
+const name= localStorage.getItem('username')
+if(!name){
+  navigate('/login')
+}else{
+    axios.post('http://localhost:8000/getcart',{ totalPrice,image,title,usersname})
+    .then(result=>{
+      
+      alert(result.data.message)
+      console.log(result.data.message)
+      console.log(title);
+    })
+    navigate('/')
+        axios.get('http://localhost:8000/getcarts')
+      .then(result => {
+        setData(result.data);
+        setCartCount(result.data.length);
+        console.log(result);
+      })
+}
+}
 
 
       const handleorder=()=>{
@@ -91,7 +218,7 @@ console.log(id);
                     <p><span className="text-muted">size: {item.size} </span></p>
                   </div>
                   <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
-
+                  <h5 className="mb-0">{item.sleeve}</h5>
                   <h5 className="mb-0">{item.category}</h5>
                     {/* <button class="btn btn-outline-dark flex-shrink-0" type="button">
     <i class="bi-cart-fill me-1"></i>
@@ -110,9 +237,9 @@ console.log(id);
                   </>
 
                   
-              ))
+             )) 
               
-              }
+               } 
   
             </div>
               ):(
@@ -123,6 +250,13 @@ console.log(id);
               )}
           </div>
         </div>
+
+
+    
+
+       
+
+
         <div class="card mb-5">
             <div class="card-body p-4">
 
@@ -136,7 +270,7 @@ console.log(id);
           </div>
         <div className="card">
           <div className="card-body text-center">
-            <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">Proceed to Pay</button>
+            <button type="button"  class="btn btn-warning" onClick={handlecheck} >Proceed to Pay</button>
           </div>
         </div>
       </div>
@@ -147,7 +281,7 @@ console.log(id);
 
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{/* <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -157,9 +291,9 @@ console.log(id);
       <div class="modal-body">
       <div class="row">
         <div class="col-4"></div>
-        {/* <!-- first coloumn --> */}
+      
         <div class="col-lg-12">
-            {/* <!-- middle --> */}
+            
             <div class="container border mt-2 p-2 row">
                 <h1 class="text-center text-seconadry mb-1">Order</h1>
                 <form action="" onSubmit={handleorder}>
@@ -178,7 +312,7 @@ console.log(id);
 
                     <span>{totalprice}</span>
                    
-{/* <img src={selectimg} style={{width:'250px',height:'200px'}} alt="" /> */}
+
                    
                     <button class="btn btn-primary m-auto" >  submit</button>
                 </form>
@@ -192,7 +326,7 @@ console.log(id);
       
     </div>
   </div>
-</div>
+</div> */}
 
 
 

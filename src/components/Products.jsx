@@ -55,7 +55,7 @@ function Products() {
   <div className="container">
 
             <div className="row mb-4">
-            <div className="buttons mb-4 text-center">
+            <div className=" mb-4 text-center">
 <button type="button" class="btn btn-outline-dark me-2" onClick={()=>setCategory('all')} >  All</button>
 
 <button type="button" class="btn btn-outline-dark me-2"  onClick={()=>setCategory("shirt")} > Men</button>

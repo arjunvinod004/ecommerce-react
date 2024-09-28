@@ -62,36 +62,157 @@ app.get('/getmainfunctions/:id',(req,res)=>{
 
 
 
+// app.post('/getcart', async (req, res) => {
+//     console.log('Request Body:', req.body); // Log the incoming request body
+//     try {
+//         const { title, price, category, image, description, id, size, usersname } = req.body;
 
+//         // Validate input
+//         if (!title || !price || !category || !image || !description || !id || !size || !usersname) {
+//             return res.status(400).json({ message: 'All fields are required.' });
+//         }
+
+//         // Create a new cart item
+//         const newCartItem = new cart({
+//             id,
+//             title,
+//             price,
+//             // totalPrice, // Uncomment this line if you're using totalPrice
+//             category,
+//             image,
+//             description,
+//             size,
+//             usersname
+//         });
+
+//         // Save the item to the database
+//         await newCartItem.save();
+
+//         res.status(200).json({ message: 'Item added to cart successfully', item: newCartItem });
+//     } catch (err) {
+//         console.error('Error adding item to cart:', err);
+//         res.status(500).json({ message: 'Failed to add item to cart' });
+//     }
+// });
+
+// app.post('/getcart', async (req, res) => {
+//     try {
+//         // Extract the array of cart items from the request body
+//         const cartItems = req.body.cartItems;
+
+//         if (!Array.isArray(cartItems) || cartItems.length === 0) {
+//             return res.status(400).json({ message: 'No cart items provided' });
+//         }
+
+//         // Iterate through each item in the cart and save it
+//         const savedItems = [];
+//         for (const item of cartItems) {
+//             const { title, price, totalPrice, category, image, description, id, size, usersname } = item;
+
+//             // Validate required fields
+//             if (!id || !title || !price || !category) {
+//                 return res.status(400).json({ message: 'Missing required fields in some items' });
+//             }
+
+//             // Create a new cart item
+//             const newCartItem = new cart({
+//                 id,
+//                 title,
+//                 price,
+//                 totalPrice,
+//                 category,
+//                 image,
+//                 description,
+//                 size,
+//                 usersname
+//             });
+
+//             // Save the item to the database
+//             const savedItem = await newCartItem.save();
+//             savedItems.push(savedItem);
+//         }
+
+//         // Respond with a success message and the saved items
+//         res.status(200).json({ message: 'Items added to cart successfully', items: savedItems });
+//     } catch (err) {
+//         console.error('Error adding items to cart:', err);
+//         res.status(500).json({ message: 'Failed to add items to cart' });
+//     }
+// });
+
+
+// app.post('/getcart', async (req, res) => {
+//     try {
+//         const { title, price, totalPrice, category, image, description, id,size,usersname} = req.body;
+
+//         // Create a new cart item
+//         const newCartItem = new cart({
+//             id,
+//             title,
+//             price,
+//             totalPrice,
+//             category,
+//             image,
+//             description,
+//             id,
+//             size,
+//             usersname           
+     
+            
+//         });
+
+//         // Save the item to the database
+//         await newCartItem.save();
+
+//         res.status(200).json({ message: 'Item added to cart successfully', item: newCartItem });
+//     } catch (err) {
+//         console.error('Error adding item to cart:', err);
+//         res.status(500).json({ message: 'Failed to add item to cart' });
+//     }
+// });
 
 app.post('/getcart', async (req, res) => {
     try {
-        const { title, price, totalPrice, category, image, description, id,size} = req.body;
+        const cartItems = req.body.cartItems;
 
-        // Create a new cart item
-        const newCartItem = new cart({
-            id,
-            title,
-            price,
-            totalPrice,
-            category,
-            image,
-            description,
-            id,
-            size
-     
-            
-        });
+        if (!Array.isArray(cartItems) || cartItems.length === 0) {
+            return res.status(400).json({ message: 'No cart items provided' });
+        }
 
-        // Save the item to the database
-        await newCartItem.save();
+        const savedItems = [];
+        for (const item of cartItems) {
+            const { title, price, totalPrice, category, image, description, id, size, usersname } = item;
 
-        res.status(200).json({ message: 'Item added to cart successfully', item: newCartItem });
+            // Validate required fields
+            if (!id || !title || !price || !category) {
+                return res.status(400).json({ message: 'Missing required fields in some items' });
+            }
+
+            // Create and save the cart item
+            const newCartItem = new cart({
+                totalPrice,image,title,usersname
+                // id,
+                // title,
+                // price,
+                // totalPrice,
+                // category,
+                // image,
+                // description,
+                // size,
+                // usersname
+            });
+
+            const savedItem = await newCartItem.save();
+            savedItems.push(savedItem);
+        }
+
+        res.status(200).json({ message: 'Items added to cart successfully', items: savedItems });
     } catch (err) {
-        console.error('Error adding item to cart:', err);
-        res.status(500).json({ message: 'Failed to add item to cart' });
+        console.error('Error adding items to cart:', err);
+        res.status(500).json({ message: 'Failed to add items to cart' });
     }
 });
+
 
 
 

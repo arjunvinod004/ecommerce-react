@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { json, useNavigate, useParams } from 'react-router-dom'
 import { useEffect ,useState } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from './Navbar'
@@ -27,13 +27,18 @@ function Product() {
   const [showPrice, setShowPrice] = useState(false);
 
   const [related,setRelated]=useState([])
-
+const [product,setProduct]=useState({})
+  const [name,setName]=useState('')
+  const [address,setAddress]=useState('')
+  const [phonenumber,setPhonenumber]=useState('')
+  const [newItem, setNewItem] = useState('');
 const navigate=useNavigate()
 
 const totalPrice = price * quanity;
 console.log(price);
 console.log(totalPrice);
 console.log(related);
+// console.log(newItem);
 
 var settings = {
   dots: true,
@@ -71,27 +76,42 @@ var settings = {
 };
 
 
+// const handlecheck=()=>{
+// const name= localStorage.getItem('username')
+// if(!name){
+//   navigate('/login')
+// }else{
+
+// }
+// }
+
+const handleorder=()=>{
+
+}
 // const unitprice= 100
 // console.log(unitprice);
 
 const decrement=()=>{
   if(quanity>1){
+ const updatedQuantity= quanity-1
     setquanity(prevQuantity => prevQuantity - 1)
- 
+ updateLocalStorage(updatedQuantity)
   }
 }
 console.log(id);
 console.log(price);
 
 const increment=()=>{
+  const updatedQuantity= quanity+1
     setquanity(prevQuantity => prevQuantity + 1)
     setShowPrice(true)
-  
+  updateLocalStorage(updatedQuantity)
   console.log(price);
  
     
   
 }
+
 
 
 
@@ -104,11 +124,31 @@ const handleinputchange=(e)=>{
 }
 
 console.log(data);
+// update the price through loccalstorage
+const updateLocalStorage = (updatedQuantity) => {
+  // Calculate the new total price
+  const totalPrice = price * updatedQuantity;
+
+  // Retrieve the current localStorage data
+  let storedData = localStorage.getItem('data');
+  let itemsArray = storedData ? JSON.parse(storedData) : [];
+
+  // Find the item in localStorage and update it
+  const itemIndex = itemsArray.findIndex(item => item._id === product._id);
+  if (itemIndex !== -1) {
+    // Update quantity and total price for the item
+    itemsArray[itemIndex].quantity = updatedQuantity;
+    itemsArray[itemIndex].totalPrice = totalPrice;
+    localStorage.setItem('data', JSON.stringify(itemsArray));
+  }
+};
+
 
 
 useEffect(()=>{
 axios.get('http://localhost:8000/getmainfunctions/'+id)
 .then(result=>{console.log(result)
+  setProduct(result.data)
 setTitle(result.data.title);
 setPrice(result.data.price);
 setCategory(result.data.category);
@@ -118,24 +158,96 @@ setDescription(result.data.description)
 setCode(result.data.code)
 setSize(result.data.size)
 setspecification(result.data.Specification)
+
+
+// localStorage.setItem('data', JSON.stringify(result.data))
+
 })
 })
 
 const handlesubmit=(e)=>{
   e.preventDefault();
-  alert('hii')
-  axios.post('http://localhost:8000/getcart',{title,price,totalPrice,category,image,description,id,size})
-  .then(result=>{
-    setMessage(result.data.message)
-    alert(result.data.message)
-    console.log(result.data.message)
-    console.log(title);
-   
-   
+  axios.get('http://localhost:8000/getmainfunctions/'+id)
+  .then(result=>{console.log(result)
+    // setMessage(result.data.message)
+    setProduct(result.data)
+  setTitle(result.data.title);
+  setPrice(result.data.price);
+  setCategory(result.data.category);
+  setimage(result.data.image)
+  setimage1(result.data.image1)
+  setDescription(result.data.description)
+  setCode(result.data.code)
+  setSize(result.data.size)
+  setspecification(result.data.Specification)
+  
+  const existingData = localStorage.getItem('data');
+  
+        
+  // Step 2: Parse the existing data or create a new array if null
+  const itemsArray = existingData ? JSON.parse(existingData) : [];
+  
+  
+  const newItem = {
+    ...result.data, // include all other properties
+     totalPrice  // add totalPrice to the object
+  };
+  
+  // Step 3: Check for duplicates using _id
+  const exists = itemsArray.some(item => item._id === result.data._id);
+  
+  if (!exists) {
+    // Step 4: Add the new item to the array if it doesn't exist
+    itemsArray.push(newItem);
+    // Step 5: Store the updated array back in localStorage
+    localStorage.setItem('data', JSON.stringify(itemsArray));
+  } else {
+    console.log("Item already exists in localStorage.");
+  }
+  // localStorage.setItem('data', JSON.stringify(result.data))
+  
   })
-  .catch(err=>{console.log(err)
-  })
+  
+  // const isloggedin= localStorage.getItem('username');
+  // if(!isloggedin){
+    // navigate('/login');
+   
+  // }
+  // else{
+    // alert('hii')
+    // axios.post('http://localhost:8000/getcart',{title,price,totalPrice,category,image,description,id,size})
+    // .then(result=>{
+    //   setMessage(result.data.message)
+    //   alert(result.data.message)
+    //   console.log(result.data.message)
+    //   console.log(title);
+     
+     
+    // })
+    // .catch(err=>{console.log(err)
+    // })
+  // }
+  
 }
+
+
+// useEffect(() => {
+
+//   const isLoggedIn = localStorage.getItem('username'); // Or any flag/token you're using
+//   if (!isLoggedIn) {
+//     // If not logged in, redirect to login page
+//     navigate('/login');
+//   } else {
+//     // If logged in, fetch the cart data
+//     axios.get('http://localhost:8000/getcarts')
+//       .then(result => {
+//         setData(result.data);
+       
+//         console.log(result);
+//       })
+//       .catch(err => console.log(err));
+//   }
+// }, []);
 
 
 useEffect(() => {
@@ -279,7 +391,9 @@ useEffect(() => {
                                 Add to cart
                             </button>
 
-                        <Link to={'/login'}> <a href="#" className="btn btn-warning mx-2 btn-lg">Checkout</a></Link>   
+                        {/* <Link to={'/login'}>  */}
+                        <a href="#" className="btn btn-warning mx-2 btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">Checkout</a>
+                        {/* </Link>    */}
 
                           
                             {/* </Link>   */}
@@ -290,6 +404,53 @@ useEffect(() => {
             </div>
         </section>
 
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">checkout</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div class="row">
+        <div class="col-4"></div>
+        {/* <!-- first coloumn --> */}
+        <div class="col-lg-12">
+            {/* <!-- middle --> */}
+            <div class="container border mt-2 p-2 row">
+                <h1 class="text-center text-seconadry mb-1">Order</h1>
+                <form action="" onSubmit={handleorder}>
+                    <div class="mb-3">
+                        <label class="form-label" for="">Name</label>
+                        <input class="form-control" value={name} onChange={(e)=>setName(e.target.value)} type="text"/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="">Address</label>
+                        <input class="form-control" value={address} onChange={(e)=>setAddress(e.target.value)}  type="text"/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="">phone Number</label>
+                        <input class="form-control" type="number" value={phonenumber} onChange={(e)=>setPhonenumber(e.target.value)}/>
+                    </div>
+
+                    <span>{totalPrice}</span>
+                   
+{/* <img src={selectimg} style={{width:'250px',height:'200px'}} alt="" /> */}
+                   
+                    <button class="btn btn-primary m-auto" >submit</button>
+                </form>
+            </div>
+        </div>
+
+
+        
+    </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
 
         
 

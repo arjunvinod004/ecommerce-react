@@ -46,7 +46,7 @@ setLogin(true)
     
       <input type="email" id="email" name="email" placeholder="email" ref={email} required />
       <input type="password" id="password" name="password" placeholder="Password" ref={password} required />
-      <button  className='buttons'>Login</button>
+      <button  className='buttons btn btn-primary'>Login</button>
     </form>
     <br />
 <div style={{textAlign:'center',}}>

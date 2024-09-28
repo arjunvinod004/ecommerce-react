@@ -35,7 +35,7 @@ function Login() {
     <form onSubmit={handlesubmit}>
       <input type="text" id="username" name="username" placeholder="Username" ref={username} required />
       <input type="password" id="password" name="password" placeholder="Password" ref={password} required />
-      <button type="submit" className='buttons'>Login</button>
+      <button type="submit" className='buttons btn btn-primary'>Login</button>
     </form>
     <br />
 <div style={{textAlign:'center',}}>
