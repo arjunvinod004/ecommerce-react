@@ -45,6 +45,8 @@ const datas=localStorage.getItem('data')
 console.log(datas);
 console.log(title);
 console.log(image);
+console.log(totalPrice);
+
 
 
 
@@ -81,10 +83,10 @@ useEffect(() => {
 
     // Iterate over the array to extract TotalPrice, image, and title for each product
     dataArray.forEach((product) => {
-      const { TotalPrice, image, title } = product;
+      const { totalPrice, image, title } = product;
 
       // Push the values into respective arrays
-      tempPrices.push(TotalPrice || 'N/A');
+      tempPrices.push(totalPrice || 'no price');
       tempImages.push(image || 'No image');
       tempTitles.push(title || 'No title');
     });
@@ -166,19 +168,30 @@ const name= localStorage.getItem('username')
 if(!name){
   navigate('/login')
 }else{
+ 
+  // alert('hii')
+  // alert(title)
+  // alert(image)
+
+  
     axios.post('http://localhost:8000/getcart',{ totalPrice,image,title,usersname})
+    // alert('api called')
     .then(result=>{
-      
-      alert(result.data.message)
-      console.log(result.data.message)
-      console.log(title);
+      console.log('Data sent successfully:', result.data);
+      // alert(result.data.message)
+      // console.log(result.data.message)
+      // console.log(title);
     })
     navigate('/')
         axios.get('http://localhost:8000/getcarts')
       .then(result => {
+        console.log('Data sent successfully:', result.data);
         setData(result.data);
         setCartCount(result.data.length);
         console.log(result);
+      })
+      .catch(error=>{
+        console.error('Error:', error.response ? error.response.data : error.message);
       })
 }
 }
@@ -270,7 +283,7 @@ if(!name){
           </div>
         <div className="card">
           <div className="card-body text-center">
-            <button type="button"  class="btn btn-warning" onClick={handlecheck} >Proceed to Pay</button>
+            <button type='button'   class="btn btn-warning" onClick={handlecheck} >Proceed to Pay</button>
           </div>
         </div>
       </div>
