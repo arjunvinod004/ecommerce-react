@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Navbar from '../src/components/Navbar'
+
 function Dashboard({cartCount}) {
   
   // const username=localStorage.getItem("username")

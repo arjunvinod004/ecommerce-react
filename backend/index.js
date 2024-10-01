@@ -177,29 +177,40 @@ app.post('/getcart', async (req, res) => {
     let { totalPrice, image, title, usersname } = req.body;
   
     // If any of the fields are arrays, pick the first value (or handle as needed)
-    if (Array.isArray(totalPrice)) totalPrice = totalPrice[0];
-    if (Array.isArray(image)) image = image[0];
-    if (Array.isArray(title)) title = title[0];
-    if (Array.isArray(usersname)) usersname = usersname[0];
+  
   
     // Convert totalPrice to a number if it's not already
-    totalPrice = Number(totalPrice);
+    // totalPrice = Number(totalPrice);
   
     try {
       // Create and save the new cart entry
-      const newCart = new cart({
-        totalPrice,
-        image,
-        title,
-        usersname
-      });
-  
+      
+    //   const newCart = new cart({
+    //     totalPrice,
+    //     image,
+    //     title,
+    //     usersname
+    //   });
+    for (let i = 0; i < totalPrice.length; i++) {
+        const newCart = new cart({
+          totalPrice: totalPrice[i],
+          image: image[i],
+          title: title[i],
+          usersname: usersname
+        })
+         await newCart.save();
+        console.log(newCart);
+    }
       // Save to MongoDB
-      const savedCart = await newCart.save();
+  
   
       // Send a success response back to the client
-      res.json({ message: 'Data saved successfully', data: savedCart });
-    } catch (error) {
+      res.json({ message: 'Data saved successfully', });
+    } 
+    
+    
+    
+    catch (error) {
       console.error('Error saving data to MongoDB:', error);
       res.status(500).json({ message: 'Failed to save data' });
     }
@@ -319,6 +330,8 @@ app.get('/getrelatedproducts',(req,res)=>{
 
 app.delete('/getcartsdelete/:id',(req,res)=>{
     const id= req.params.id
+    console.log(id);
+    
     cart.findByIdAndDelete({_id:id})
     .then(users=>{res.json(users)
        console.log(users);

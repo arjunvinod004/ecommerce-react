@@ -143,9 +143,13 @@ const usersname=localStorage.getItem('username')
 console.log(usersname);
 
     const handledelete=(id)=>{
-      
+      alert('hii')
+      alert(id)
       axios.delete('http://localhost:8000/getcartsdelete/'+id)
-      .then(result=>{console.log(result)
+      alert(`deleted ${id}`)
+      .then(result=>{
+        alert('deleted')
+        console.log(result)
         window.location.reload()
       })
       .catch(err=>console.log(err))
@@ -182,7 +186,7 @@ if(!name){
       // console.log(result.data.message)
       // console.log(title);
     })
-    navigate('/')
+    navigate('/checkout')
         axios.get('http://localhost:8000/getcarts')
       .then(result => {
         console.log('Data sent successfully:', result.data);

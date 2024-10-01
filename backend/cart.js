@@ -16,7 +16,8 @@ const userschema= new mongoose.Schema({
     totalPrice: Number,
     image: String,
     title: String,
-    usersname: String
+    usersname: String,
+   
 //     title: { type: String, required: true },
 //     price: { type: Number, required: true },
 //      totalPrice: { type: Number, required: true },

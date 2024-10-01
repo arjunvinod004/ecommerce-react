@@ -11,10 +11,9 @@ import Cart from './Cart';
 import Increments from './Increments';
 import Login from './components/Login';
 import Register from './components/Register';
-import Admin from './components/Admin';
-import Dashboard from './Dashboard';
-
-
+import Admin from './admin/Admin';
+import Dashboard from './admin/Dashboard';
+import Checkout from '../src/Checkout'
 function App() {
 
   
@@ -31,6 +30,7 @@ function App() {
         <Route path='/admin' element={<Admin/>}/>
         <Route path='/increment' element={<Increments/>}/>
         <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route path='/checkout' element={<Checkout/>}/>
      
       </Routes>
     </Router>
