@@ -37,7 +37,7 @@ function Navbar({ cartCount }) {
    <Link to={'/register'}> <button type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-user me-2"></i> Register</button></Link>  
     <Link to={'/cart'} style={{display:'contents'}}> 
      <button type="button" class="btn btn-outline-secondary" style={{position:'relative'}}>
-    <span class="cart-item-count">{cartCount}</span>
+    
       <i class="fa-solid fa-cart-shopping me-2"></i> Cart</button></Link>
    
 {username &&(<Dropdown>

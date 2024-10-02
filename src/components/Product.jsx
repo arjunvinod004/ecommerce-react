@@ -201,6 +201,7 @@ const handlesubmit=(e)=>{
     itemsArray.push(newItem);
     // Step 5: Store the updated array back in localStorage
     localStorage.setItem('data', JSON.stringify(itemsArray));
+    navigate('/cart')
   } else {
     console.log("Item already exists in localStorage.");
   }
@@ -391,12 +392,7 @@ useEffect(() => {
                                 Add to cart
                             </button>
 
-                        {/* <Link to={'/login'}>  */}
-                        <a href="#" className="btn btn-warning mx-2 btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">Checkout</a>
-                        {/* </Link>    */}
-
-                          
-                            {/* </Link>   */}
+                       
                            
                         </div>
                     </div>
@@ -405,52 +401,7 @@ useEffect(() => {
         </section>
 
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">checkout</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <div class="row">
-        <div class="col-4"></div>
-        {/* <!-- first coloumn --> */}
-        <div class="col-lg-12">
-            {/* <!-- middle --> */}
-            <div class="container border mt-2 p-2 row">
-                <h1 class="text-center text-seconadry mb-1">Order</h1>
-                <form action="" onSubmit={handleorder}>
-                    <div class="mb-3">
-                        <label class="form-label" for="">Name</label>
-                        <input class="form-control" value={name} onChange={(e)=>setName(e.target.value)} type="text"/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="">Address</label>
-                        <input class="form-control" value={address} onChange={(e)=>setAddress(e.target.value)}  type="text"/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="">phone Number</label>
-                        <input class="form-control" type="number" value={phonenumber} onChange={(e)=>setPhonenumber(e.target.value)}/>
-                    </div>
 
-                    <span>{totalPrice}</span>
-                   
-{/* <img src={selectimg} style={{width:'250px',height:'200px'}} alt="" /> */}
-                   
-                    <button class="btn btn-primary m-auto" >submit</button>
-                </form>
-            </div>
-        </div>
-
-
-        
-    </div>
-      </div>
-      
-    </div>
-  </div>
-</div>
 
         
 

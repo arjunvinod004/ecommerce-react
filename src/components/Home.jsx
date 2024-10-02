@@ -7,22 +7,13 @@ function Home() {
   const [cartCount, setCartCount] = useState(0); // State to track the number of items in the cart
 
 
-  useEffect(()=>{
-    axios.get('http://localhost:8000/getcarts')
-    .then(result=>{
-    
-      setCartCount(result.data.length);
-      console.log(result)
-    
-    
-    })
-    },[])
+
 
   
   
   return (
     <div className="hero">
-      <Navbar cartCount={cartCount}  />
+      <Navbar   />
 
 
 

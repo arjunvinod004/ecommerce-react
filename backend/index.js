@@ -278,24 +278,36 @@ app.post('/getcart', async (req, res) => {
 
 
 app.post('/orders', async (req, res) => {
+    const {name,address,phonenumber,totalPrice,title}=req.body
     try {
-        const {name,address,phonenumber,totalprice} = req.body;
-
-        // Create a new cart item
-        const neworderItem = new order({
+        // Create and save the new cart entry
+        
+      //   const newCart = new cart({
+      //     totalPrice,
+      //     image,
+      //     title,
+      //     usersname
+      //   });
+      for (let i = 0; i < title.length; i++) {
+          const newCart = new order({
            name,
            address,
            phonenumber,
-           totalprice
-     
+            title: title[i],
             
-        });
-
-        // Save the item to the database
-        await neworderItem.save();
-
-        res.status(200).json({ message: 'order generated successfully', item: neworderItem });
-    } catch (err) {
+          })
+           await newCart.save();
+          console.log(newCart);
+      }
+        // Save to MongoDB
+    
+    
+        // Send a success response back to the client
+        res.json({ message: 'Data saved successfully', });
+      } 
+    
+    
+    catch (err) {
         console.error('Error adding item to cart:', err);
         res.status(500).json({ message: 'Failed to order item' });
     }
@@ -304,16 +316,7 @@ app.post('/orders', async (req, res) => {
 
 
 
-app.get('/getcarts',(req,res)=>{
-    const id= req.params.id
-    cart.find()
-    .then(users=>{res.json(users)
-        
-})
 
-
-    .catch(err=>res.json(err))
-})
 
 app.get('/getrelatedproducts',(req,res)=>{
   relats.find()
@@ -328,17 +331,7 @@ app.get('/getrelatedproducts',(req,res)=>{
 
 
 
-app.delete('/getcartsdelete/:id',(req,res)=>{
-    const id= req.params.id
-    console.log(id);
-    
-    cart.findByIdAndDelete({_id:id})
-    .then(users=>{res.json(users)
-       console.log(users);
-        
-})
-    .catch(err=>res.json(err))
-})
+
 
 
 app.listen(port,function(){

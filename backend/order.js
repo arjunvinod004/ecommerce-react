@@ -17,7 +17,8 @@ const orderschema= new mongoose.Schema({
     name:String,
     address:String,
     phonenumber:Number,
-    totalprice:Number
+    totalPrice:Number,
+    title:String
 
    
 

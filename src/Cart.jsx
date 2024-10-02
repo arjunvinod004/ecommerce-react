@@ -68,7 +68,7 @@ console.log(id);
 // })
 useEffect(() => {
   // Retrieve the product data from localStorage
-  const storedData = localStorage.getItem('data');
+  const storedData = localStorage.getItem('data')|| [];
   console.log(storedData);
 
   if (storedData) {
@@ -142,17 +142,22 @@ useEffect(() => {
 const usersname=localStorage.getItem('username')
 console.log(usersname);
 
-    const handledelete=(id)=>{
-      alert('hii')
-      alert(id)
-      axios.delete('http://localhost:8000/getcartsdelete/'+id)
-      alert(`deleted ${id}`)
-      .then(result=>{
-        alert('deleted')
-        console.log(result)
-        window.location.reload()
-      })
-      .catch(err=>console.log(err))
+    const handledelete=(idToDelete)=>{
+alert(idToDelete)
+      const updatedItems = data.filter(item => item._id !== idToDelete); // Filter out the item
+    setData(updatedItems); // Update state with the filtered array
+    alert(updatedItems)
+    localStorage.setItem('data', JSON.stringify(updatedItems)); // Update localStorage
+      // alert('hii')
+      // alert(id)
+      // axios.delete('http://localhost:8000/getcartsdelete/'+id)
+      // alert(`deleted ${id}`)
+      // .then(result=>{
+      //   alert('deleted')
+      //   console.log(result)
+      //   window.location.reload()
+      // })
+      // .catch(err=>console.log(err))
       }
       
       useEffect(()=>{
