@@ -85,8 +85,13 @@ icon:'success'
                         <label class="form-label" for="">Phone No</label>
                         <input class="form-control" value={phonenumber} onChange={(e)=>setPhonenumber(e.target.value)} type="number"/>
                     </div>
-                    <p>{totalPrice}</p>
-                    <p>{title}</p>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="">total price</label>
+                        <input class="form-control" value={totalPrice} readOnly type="number"/>
+                    </div>
+                    {/* <p>{totalPrice}</p> */}
+                    {/* <p>{title}</p> */}
                     <button class="btn btn-primary btn-sm w-50 m-auto" onClick={handleorder}>order</button>
                 </form>
             </div>

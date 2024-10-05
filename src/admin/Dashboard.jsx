@@ -1,100 +1,188 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Dashboard({cartCount}) {
+function Dashboard({ cartCount }) {
+  const [title, setTitle] = useState("");
+  const [description, setdescription] = useState("");
+  const [quanity,setQuanity]=useState('');
+  const [price,setPrice]=useState('');
+  const [image,setImage]=useState()
+  const [file,setfile]=useState() 
+   const [orders, setOrders] = useState([]);
+  const [products,setproducts]=useState([])
+ console.log(image);
+ console.log(products);
+ console.log(title);
+ console.log(description);
+ console.log(price);
+ console.log(quanity);
+ 
+ 
+ 
+ 
+ 
   
+  console.log(orders);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/getorders")
+      .then((res) => {
+        setOrders(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const handleimagechange=(e)=>{
+
+const data= new FileReader()
+data.addEventListener('load',()=>{
+  setImage(data.result)
+})
+data.readAsDataURL(e.target.files[0])
+
+  }
+const handlesubmit=()=>{
+  
+}
+
   // const username=localStorage.getItem("username")
 
   return (
     <div>
-         <nav class="navbar navbar-expand-lg bg-body-tertiary py-4">
-    <div class="container">
-     <Link to={'/'} style={{textDecoration:'none'}}><a class="navbar-brand"> Deals of Day</a></Link> 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-         <h5>welcome to dashboard</h5>        
-        </ul>
-      <div classname="buttons" style={{display:'flex',gap:'10px'}}  >
-  
-   
-    <Link to={'/cart'} style={{display:'contents'}}> 
-     <button type="button" class="btn btn-outline-secondary" style={{position:'relative'}}>
- 
-      Logout</button></Link>
-   
+      <nav class="navbar navbar-expand-lg bg-body-tertiary py-4">
+        <div class="container">
+          <Link to={"/"} style={{ textDecoration: "none" }}>
+            <a class="navbar-brand"> Deals of Day</a>
+          </Link>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+              <h5>welcome to dashboard</h5>
+            </ul>
+            <div classname="buttons" style={{ display: "flex", gap: "10px" }}>
+              <Link to={"/cart"} style={{ display: "contents" }}>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  style={{ position: "relative" }}
+                >
+                  Logout
+                </button>
+              </Link>
 
-
-      
-{/* {username && (<span  className='mx-5 mt-2'>
+              {/* {username && (<span  className='mx-5 mt-2'>
         hello {username}
       </span>)}
        */}
- 
-</div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    
 
-      </div>
-    </div>
-  </nav>
-      {/* <div style={{float:'right'}} className='mr-2'>welcome {username}</div> */}
-      {/* <div className="text-center mt-3">welcome to dashboard</div> */}
-      <div class="d-flex align-items-start p-4 separation">
-  <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+<div class="d-flex align-items-start mt-3 separation ">
+  <div class="nav flex-column nav-pills me-3 p-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
     <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Products</button>
-    <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Order</button>
+    <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">order</button>
+    {/* <button class="nav-link" id="v-pills-disabled-tab" data-bs-toggle="pill" data-bs-target="#v-pills-disabled" type="button" role="tab" aria-controls="v-pills-disabled" aria-selected="false" disabled>Disabled</button>
     <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</button>
-    <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button>
+    <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button> */}
   </div>
   <div class="tab-content mx-auto" id="v-pills-tabContent">
-    <div class="tab-pane fade show active " id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+    <div class="tab-pane fade show active " id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
     <body>
-    <div class="row">
-        <div class="col-4"></div>
-        {/* <!-- first coloumn --> */}
-        <div class="col-lg-12 ">
-            {/* <!-- middle --> */}
-            <div class="container-fluid border mt-0 p-5">
-                <h1 class="text-center text-primary mb-2">Products</h1>
-                <form action="">
-                    <div class="mb-3">
-                        <label class="form-label" for="">Name</label>
-                        <input class="form-control" type="text"/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="">Description</label>
-                        <input class="form-control" type="password"/>
-                    </div>
-<div className="mb-3">
-  <label htmlFor="">Image</label>
-  <input type="file" className="form-control" />
-</div>
+              <div class="row">
+                <div class="col-4"></div>
+             
+                <div class="col-lg-12 ">
+               
+                  <div class="container-fluid border mt-0 p-5">
+                    <h1 class="text-center text-primary mb-2">Products</h1>
+                    <form action="">
+                      <div class="mb-3">
+                        <label class="form-label" for="">
+                          Name
+                        </label>
+                        <input class="form-control" type="text" value={title} onChange={(e)=>setTitle(e.target.value)}/>
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label" for="">
+                          Description
+                        </label>
+                        <input class="form-control" type="text" value={description} onChange={(e)=>setdescription(e.target.value)} />
+                      </div>
 
-                    <button class="btn btn-primary">log in</button>
-                </form>
-            </div>
-        </div>
+                      <div class="mb-3">
+                        <label class="form-label" for="">
+                          Quanity
+                        </label>
+                        <input class="form-control" type="number" value={quanity}onChange={(e)=>setQuanity(e.target.value)} />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label" for="">
+                          Price
+                        </label>
+                        <input value={price} class="form-control" type="number" onChange={(e)=>setPrice(e.target.value)} />
+                      </div>
+                      <div className="mb-3">
+                        <label htmlFor="">Image</label>
+                        <input onChange={handleimagechange} type="file" className="form-control" />
+                      </div>
+                      <img src={image} alt="" width={'200px'} height={'200px'}/>
 
-
-        
+                      <button type="submit" class="btn btn-primary" onClick={handlesubmit}>submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </body>
     </div>
-
-</body>
-
+    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
+    <div className="">
+    <div className="table-responsive">
+      <table className="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Phone No</th>
+            <th scope="col">Title</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders.map((item) => (
+            <tr key={item._id}>
+              <th>{item._id}</th>
+              <td>{item.name}</td>
+              <td>{item.address}</td>
+              <td>{item.phonenumber}</td>
+              <td>{item.title}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
-    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
-    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+  </div>
+    </div>
+    {/* <div class="tab-pane fade" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0">...</div>
+    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">...</div>
+    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabindex="0">...</div> */}
   </div>
 </div>
-
-
-      
-
-
-      
     </div>
   );
 }

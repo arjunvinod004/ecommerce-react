@@ -144,5 +144,11 @@ code {
  .separation {
   background: #f7f7f7;
   border: 1px solid #e7e7e7;
-  margin: 20px;
+
 }
+
+/* @media screen and (max-width:500px) {
+  .separation{
+    display: contents;
+  }
+} */

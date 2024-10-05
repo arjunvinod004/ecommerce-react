@@ -29,7 +29,7 @@ const navigate=useNavigate();
     <form onSubmit={handleformsubmit}>
       <input type="text" id="username" name="username" placeholder="Username" ref={username} required />
       <input type="password" id="password" name="password" placeholder="Password" ref={password} required />
-      <button >Login</button>
+      <button className='btn btn-primary' >Submit</button>
     </form>
    
 
