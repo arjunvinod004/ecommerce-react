@@ -10,6 +10,14 @@ import "slick-carousel/slick/slick-theme.css";
 
 
 function Product() {
+
+useEffect(()=>{
+  window.scrollTo({
+    top: 0, // Scroll to the top
+    behavior: "smooth", // Smooth scrolling
+  });
+},[])
+
     const [data,setData]=useState(null)
     const {id}=useParams()
     const [loading, setLoading] = useState(true); // To track loading state

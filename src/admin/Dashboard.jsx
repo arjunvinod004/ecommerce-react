@@ -2,14 +2,18 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Resizer from "react-image-file-resizer";
 
 function Dashboard({ cartCount }) {
   const [title, setTitle] = useState("");
   const [description, setdescription] = useState("");
   const [quanity,setQuanity]=useState('');
   const [price,setPrice]=useState('');
-  const [image,setImage]=useState()
-  const [file,setfile]=useState() 
+  const [image,setImage]=useState("")
+ const[specification,setspecification]=useState("")
+ const [code,setcode]=useState("")
+ const[category,setcategory]=useState("")
+ const [size,setsize]=useState("")
    const [orders, setOrders] = useState([]);
   const [products,setproducts]=useState([])
  console.log(image);
@@ -38,14 +42,36 @@ function Dashboard({ cartCount }) {
   const handleimagechange=(e)=>{
 
 const data= new FileReader()
-data.addEventListener('load',()=>{
-  setImage(data.result)
-})
-data.readAsDataURL(e.target.files[0])
+if (e.target.files[0]) {
+  Resizer.imageFileResizer(
+    e.target.files[0],
+    200, // width
+    200, // height
+    "JPEG", // output format (JPEG, PNG, etc.)
+    70, // quality (0-100)
+    0, // rotation
+    (uri) => {
+      setImage(uri); // set base64 string after resize
+    },
+    "base64" // output type
+  );
+}
 
+data.readAsDataURL(e.target.files[0])
+data.onload=()=>{
+console.log(data.result);
+setImage(data.result)
+
+}
   }
 const handlesubmit=()=>{
-  
+  axios.post('http://localhost:8000/addproducts',{title,description,quanity,price,image})
+  .then(res=>{
+    console.log(res.data);
+    
+  })
+  .catch(err=>console.log(err)
+  )
 }
 
   // const username=localStorage.getItem("username")
@@ -127,6 +153,34 @@ const handlesubmit=()=>{
 
                       <div class="mb-3">
                         <label class="form-label" for="">
+                          specification
+                        </label>
+                        <input class="form-control" type="text" value={specification} onChange={(e)=>setspecification(e.target.value)} />
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label" for="">
+                          code
+                        </label>
+                        <input class="form-control" type="text" value={code} onChange={(e)=>setcode(e.target.value)} />
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label" for="">
+                          category
+                        </label>
+                        <input class="form-control" type="text" value={category} onChange={(e)=>setcategory(e.target.value)} />
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label" for="">
+                          size
+                        </label>
+                        <input class="form-control" type="text" value={size} onChange={(e)=>setsize(e.target.value)} />
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label" for="">
                           Quanity
                         </label>
                         <input class="form-control" type="number" value={quanity}onChange={(e)=>setQuanity(e.target.value)} />
@@ -141,7 +195,7 @@ const handlesubmit=()=>{
                         <label htmlFor="">Image</label>
                         <input onChange={handleimagechange} type="file" className="form-control" />
                       </div>
-                      <img src={image} alt="" width={'200px'} height={'200px'}/>
+                      {image==""||image==null?"":<img width={'200px'} height={'200px'} src={image}/>}
 
                       <button type="submit" class="btn btn-primary" onClick={handlesubmit}>submit</button>
                     </form>

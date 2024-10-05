@@ -5,7 +5,7 @@ function Admin() {
 
     const username=useRef();
     const password = useRef();
-    const getusername=localStorage.getItem("username");
+    const getusername=localStorage.getItem("admin");
     const getpassword=localStorage.getItem("password");
 const navigate=useNavigate();
     const handleformsubmit=()=>{

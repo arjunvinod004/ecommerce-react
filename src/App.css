@@ -131,3 +131,5 @@ input {
   background-color: #2980b9;
 }
 
+img:hover{
+transform: scale(1.1);}

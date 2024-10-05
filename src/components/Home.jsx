@@ -3,6 +3,7 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import Products from "./Products";
 import { useEffect } from "react";
+import Footer from "./Footer";
 function Home() {
   const [cartCount, setCartCount] = useState(0); // State to track the number of items in the cart
 
@@ -118,6 +119,7 @@ function Home() {
       </div>
 
       <Products />
+      
     </div>
   );
 }

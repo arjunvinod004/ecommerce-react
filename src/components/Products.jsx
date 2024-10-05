@@ -5,6 +5,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { Link } from 'react-router-dom'
 import Navbar from './Navbar'
+import Footer from './Footer'
 function Products() {
     const [data,setData]=useState([])
     const id= useId()
@@ -42,7 +43,7 @@ function Products() {
   return (
     <div>
     
-      <div className="container">
+      <div className="container" style={{background:'#f4f4f4'}}>
         <div className="row">
             <div className="col-12">
                 <h1 className='fw-bolder text-center mt-3 mb-4
@@ -104,6 +105,7 @@ function Products() {
             </div>
         </div>
       </div>
+      <Footer/>
     </div>
   )
 }
